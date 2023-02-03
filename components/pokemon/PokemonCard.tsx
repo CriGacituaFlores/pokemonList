@@ -17,7 +17,7 @@ export const PokemonCard: FC<Props> = ({pokemon}) => {
   }
   return (
     <Grid xs={6} sm={3} md={2} xl={1}>
-      <Card isHoverable isPressable onClick={onClick}>
+      <Card hoverable clickable onClick={onClick}>
         <Card.Body css={{padding: 1}}>
           <Card.Image
             src={img}

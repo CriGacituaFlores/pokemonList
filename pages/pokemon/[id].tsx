@@ -37,7 +37,7 @@ const PokemonPage: NextPage<Props> = ({pokemon}) => {
     <Layout title={pokemon.name}>
       <Grid.Container css={{marginTop: '5px'}} gap={2}>
         <Grid xs={12} sm={4}>
-          <Card isHoverable={true} css={{padding: '30px'}}>
+          <Card hoverable={true} css={{padding: '30px'}}>
             <Card.Body>
               <Card.Image
                 src={pokemon.sprites.other?.dream_world.front_default || '/no-image.png'}
