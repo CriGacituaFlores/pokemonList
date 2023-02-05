@@ -107,22 +107,36 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
   const {data} = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
   const pokemonNames: string[] = data.results.map(pokemon => pokemon.name);
 
+  //blocking permite pasar al getstatic props viendo si el pokemon con el nombre existe
   return {
     //PARENTESIS PARA RETURN IMPLICITO
     paths: pokemonNames.map(name => ({
       params: {name}
     })),
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
   const {name: namePokemon} = params as { name: string };
 
+  const pokemon = await getPokemonInfo(namePokemon.toLowerCase());
+
+  if(!pokemon) {
+    // permamente false porque en el futuro puede llegar a acceder por el id 1000
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
-      pokemon: await getPokemonInfo(namePokemon)
-    }
+      pokemon
+    },
+    revalidate: 86400,
   }
 }
 
